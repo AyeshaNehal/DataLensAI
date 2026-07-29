@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../features/auth/context/AuthContext';
 import { datasetService } from '../features/datasets/services/datasetService';
+import { aiService } from '../features/ai/services/aiService';
 import {
   Database,
   Sparkles,
   Upload,
-  BarChart3,
   ShieldCheck,
   Calendar,
   Mail,
@@ -37,12 +37,18 @@ const sampleChartData = [
 export const DashboardPage: React.FC = () => {
   const { user } = useAuth();
   const [datasetCount, setDatasetCount] = useState<number>(0);
+  const [queryCount, setQueryCount] = useState<number>(0);
 
   useEffect(() => {
     datasetService
       .getMyDatasets()
       .then((data) => setDatasetCount(data.length))
       .catch(() => setDatasetCount(0));
+
+    aiService
+      .getQueryHistory()
+      .then((data) => setQueryCount(data.length))
+      .catch(() => setQueryCount(0));
   }, []);
 
   return (
@@ -118,21 +124,24 @@ export const DashboardPage: React.FC = () => {
           </div>
         </Link>
 
-        <div className="glass-card rounded-2xl p-6 border border-slate-700/50 flex items-center justify-between">
+        <Link
+          to="/ai-insights"
+          className="glass-card rounded-2xl p-6 border border-slate-700/50 hover:border-indigo-500/50 transition-all duration-200 flex items-center justify-between group"
+        >
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
               AI Queries Asked
             </p>
-            <h3 className="text-3xl font-bold text-white mt-2">0</h3>
-            <p className="text-xs text-indigo-400 mt-1 flex items-center gap-1">
-              <span>Ready for Phase 4</span>
-              <Sparkles className="w-3.5 h-3.5" />
+            <h3 className="text-3xl font-bold text-white mt-2">{queryCount}</h3>
+            <p className="text-xs text-indigo-400 mt-1 flex items-center gap-1 group-hover:underline">
+              <span>Launch AI Analyst</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </p>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-            <BarChart3 className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+            <Sparkles className="w-6 h-6" />
           </div>
-        </div>
+        </Link>
 
         <div className="glass-card rounded-2xl p-6 border border-slate-700/50 flex items-center justify-between">
           <div>
@@ -241,6 +250,17 @@ export const DashboardPage: React.FC = () => {
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            <span className="text-xs text-slate-400">Phase 3 Interactive Studio is Ready</span>
+            <Link
+              to="/explore"
+              className="text-xs font-bold text-brand-400 hover:text-brand-300 flex items-center gap-1 hover:underline"
+            >
+              <span>Launch Explore & EDA Studio</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </div>

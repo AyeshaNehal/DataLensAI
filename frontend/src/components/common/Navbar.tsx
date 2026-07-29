@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../features/auth/context/AuthContext';
-import { Database, Sparkles, LogOut, ShieldCheck } from 'lucide-react';
+import { Database, Sparkles, LogOut, ShieldCheck, BarChart2 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -42,6 +42,20 @@ export const Navbar: React.FC = () => {
                 >
                   <Database className="w-4 h-4 text-brand-400" />
                   <span>Datasets</span>
+                </Link>
+                <Link
+                  to="/explore"
+                  className="px-3.5 py-1.5 text-sm font-semibold text-white bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 rounded-xl transition-colors flex items-center gap-1.5"
+                >
+                  <BarChart2 className="w-4 h-4 text-indigo-400" />
+                  <span>Explore & EDA</span>
+                </Link>
+                <Link
+                  to="/ai-insights"
+                  className="px-3.5 py-1.5 text-sm font-semibold text-white bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 rounded-xl transition-colors flex items-center gap-1.5"
+                >
+                  <Sparkles className="w-4 h-4 text-purple-400" />
+                  <span>AI Analyst</span>
                 </Link>
               </nav>
 

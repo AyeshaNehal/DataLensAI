@@ -7,6 +7,8 @@ import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { DatasetsPage } from './pages/DatasetsPage';
+import { ExplorePage } from './pages/ExplorePage';
+import { AIInsightsPage } from './pages/AIInsightsPage';
 
 /**
  * Redirects authenticated users away from Login/Signup pages to the Dashboard.
@@ -50,6 +52,8 @@ export const App: React.FC = () => {
               <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/datasets" element={<DatasetsPage />} />
+                <Route path="/explore" element={<ExplorePage />} />
+                <Route path="/ai-insights" element={<AIInsightsPage />} />
               </Route>
 
               {/* Fallback redirect */}

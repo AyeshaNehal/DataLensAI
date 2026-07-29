@@ -22,6 +22,16 @@ class Settings(BaseSettings):
     # Optional AI API Key
     GROQ_API_KEY: str | None = None
 
+    def get_database_url(self) -> str:
+        """
+        SQLAlchemy 2.0 requires 'postgresql://' scheme, but some cloud providers
+        (like Render or Heroku) use 'postgres://'. Automatically convert if needed.
+        """
+        url = self.DATABASE_URL
+        if url and url.startswith("postgres://"):
+            return url.replace("postgres://", "postgresql://", 1)
+        return url
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
